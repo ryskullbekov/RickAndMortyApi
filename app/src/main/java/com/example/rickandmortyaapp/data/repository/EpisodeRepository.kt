@@ -1,19 +1,22 @@
 package com.example.rickandmortyaapp.data.repository
 
+import androidx.lifecycle.LiveData
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import androidx.paging.liveData
 import com.example.rickandmortyaapp.common.base.BaseRepository
 import com.example.rickandmortyaapp.data.network.api.EpisodeApiService
 import com.example.rickandmortyaapp.data.network.dto.episode.Episode
 import com.example.rickandmortyaapp.data.network.paging.EpisodePagingSource
 import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class EpisodeRepository constructor(
+class EpisodeRepository @Inject constructor(
     private val service: EpisodeApiService
 ) : BaseRepository() {
 
-    fun fetchEpisodes(): Flow<PagingData<Episode>> {
+    fun fetchEpisodes(): LiveData<PagingData<Episode>> {
         return Pager(
             config = PagingConfig(
                 pageSize = 10,
@@ -21,7 +24,7 @@ class EpisodeRepository constructor(
             pagingSourceFactory = {
                 EpisodePagingSource(service)
             }
-        ).flow
+        ).liveData
     }
     fun fetchEpisode(id: Int) = doRequest {
         service.fetchEpisode(id)

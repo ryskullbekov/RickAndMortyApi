@@ -11,10 +11,12 @@ import com.example.rickandmortyaapp.R
 import com.example.rickandmortyaapp.databinding.FragmentLocationBinding
 import com.example.rickandmortyaapp.ui.adapters.LocationAdapter
 import com.example.rickandmortyaapp.ui.adapters.pagin.LoadAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@AndroidEntryPoint
 class LocationFragment : BaseFragment<LocationViewModel, FragmentLocationBinding>(
     R.layout.fragment_location
 ) {
@@ -47,11 +49,9 @@ class LocationFragment : BaseFragment<LocationViewModel, FragmentLocationBinding
     }
 
     override fun setupRequests() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.fetchLocations().collectLatest {
-                this@LocationFragment.lifecycleScope.launch {
-                    locationAdapter.submitData(it)
-                }
+        viewModel.fetchLocations().observe(requireActivity()) {
+            this.lifecycleScope.launch {
+                locationAdapter.submitData(it)
             }
         }
     }

@@ -11,10 +11,12 @@ import com.example.rickandmortyaapp.R
 import com.example.rickandmortyaapp.databinding.FragmentEpisodeBinding
 import com.example.rickandmortyaapp.ui.adapters.EpisodeAdapter
 import com.example.rickandmortyaapp.ui.adapters.pagin.LoadAdapter
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
+@AndroidEntryPoint
 class EpisodeFragment : BaseFragment<EpisodeViewModel, FragmentEpisodeBinding>(
     R.layout.fragment_episode
 ) {
@@ -49,11 +51,9 @@ class EpisodeFragment : BaseFragment<EpisodeViewModel, FragmentEpisodeBinding>(
     }
 
     override fun setupRequests() {
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.fetchEpisode().collectLatest {
-                this@EpisodeFragment.lifecycleScope.launch {
-                    episodeAdapter.submitData(it)
-                }
+        viewModel.fetchEpisode().observe(requireActivity()) {
+            this.lifecycleScope.launch {
+                episodeAdapter.submitData(it)
             }
         }
     }
