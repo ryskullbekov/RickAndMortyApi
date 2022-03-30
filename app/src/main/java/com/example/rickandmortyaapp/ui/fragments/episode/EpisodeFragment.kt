@@ -1,6 +1,7 @@
 package com.example.rickandmortyaapp.ui.fragments.episode
 
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.LoadState
@@ -20,8 +21,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 class EpisodeFragment : BaseFragment<EpisodeViewModel, FragmentEpisodeBinding>(
     R.layout.fragment_episode
 ) {
-    override val viewModel: EpisodeViewModel by viewModel()
+    override val viewModel: EpisodeViewModel by viewModels()
     override val binding by viewBinding(FragmentEpisodeBinding::bind)
+
     private val episodeAdapter = EpisodeAdapter(
 
     )
@@ -57,6 +59,8 @@ class EpisodeFragment : BaseFragment<EpisodeViewModel, FragmentEpisodeBinding>(
             }
         }
     }
+
+
 
 
 }

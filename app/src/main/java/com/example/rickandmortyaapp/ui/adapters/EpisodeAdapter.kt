@@ -9,6 +9,7 @@ import com.example.rickandmortyaapp.data.network.dto.episode.Episode
 import com.example.rickandmortyaapp.databinding.ItemEpisodeBinding
 
 class EpisodeAdapter(
+
 ) : PagingDataAdapter<Episode, EpisodeAdapter.EpisodeViewHolder>(
     BaseComporator()
 ) {
@@ -27,6 +28,7 @@ class EpisodeAdapter(
     inner class EpisodeViewHolder(
         private val binding: ItemEpisodeBinding
     ) : RecyclerView.ViewHolder(binding.root) {
+
 
 
 

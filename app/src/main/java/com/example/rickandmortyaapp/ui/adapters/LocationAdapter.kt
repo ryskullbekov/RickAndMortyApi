@@ -31,6 +31,8 @@ class LocationAdapter(
 
 
 
+
+
         fun onBind(item: Location) = with(binding) {
             itemName.text = item.name
             itemType.text = item.type
